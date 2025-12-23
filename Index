@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Roblox Key System</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  display: flex;
+  color: white;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 260px;
+  background: rgba(0,0,0,0.8);
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.sidebar h2 {
+  color: #00ffae;
+  text-align: center;
+}
+
+.sidebar button {
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #00ffae, #00c3ff);
+  color: #111;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.sidebar button:hover {
+  transform: scale(1.05);
+}
+
+/* CONTENT */
+.content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.panel {
+  width: 760px;
+  max-width: 95%;
+  background: rgba(0,0,0,0.6);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.6);
+  display: none;
+  text-align: center;
+}
+
+.panel.active {
+  display: block;
+}
+
+.panel h1 {
+  color: #00ffae;
+}
+
+.key-box {
+  margin-top: 25px;
+  padding: 20px;
+  background: #111;
+  border-radius: 14px;
+  border: 2px solid #00ffae;
+  font-size: 22px;
+  letter-spacing: 3px;
+}
+
+.status {
+  margin-top: 15px;
+  color: #00ffae;
+  font-weight: bold;
+}
+
+/* SCRIPT BOX */
+textarea {
+  width: 100%;
+  height: 220px;
+  background: #111;
+  color: #00ffae;
+  border-radius: 14px;
+  padding: 15px;
+  border: 2px solid #00ffae;
+  resize: none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- MENU -->
+<div class="sidebar">
+  <h2>🔐 KEY MENU</h2>
+  <button onclick="abrir('key')">GERAR KEY</button>
+  <button onclick="abrir('script')">SCRIPT</button>
+  <button onclick="abrir('config')">CONFIGURAÇÕES</button>
+</div>
+
+<!-- CONTEÚDO -->
+<div class="content">
+
+  <!-- KEY -->
+  <div class="panel active" id="key">
+    <h1>GERADOR DE KEY</h1>
+    <p>Clique no botão abaixo. A key será copiada automaticamente.</p>
+    <button onclick="gerarKey()">GERAR KEY</button>
+    <div class="key-box" id="keyBox">---</div>
+    <div class="status" id="status"></div>
+  </div>
+
+  <!-- SCRIPT -->
+  <div class="panel" id="script">
+    <h1>SEU SCRIPT</h1>
+    <textarea readonly>
+-- COLE ISSO NO EXECUTOR
+loadstring(game:HttpGet("https://raw.githubusercontent.com/davi6166446646494694/Script-Dev.lua/refs/heads/main/script%2CDev.lua"))()
+    </textarea>
+  </div>
+
+  <!-- CONFIG -->
+  <div class="panel" id="config">
+    <h1>CONFIGURAÇÕES</h1>
+    <p>Informações do sistema:</p>
+    <p>✔ Key aleatória</p>
+    <p>✔ Cópia automática</p>
+    <p>✔ Interface simples</p>
+    <p>✔ Preparado para sistema de tempo</p>
+  </div>
+
+</div>
+
+<script>
+function abrir(id) {
+  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+function gerarKey() {
+  const chars = "FreeGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let key = "";
+
+  for (let i = 0; i < 16; i++) {
+    key += chars[Math.floor(Math.random() * chars.length)];
+    if ((i + 1) % 4 === 0 && i !== 15) key += "-";
+  }
+
+  document.getElementById("keyBox").innerText = key;
+
+  navigator.clipboard.writeText(key);
+  document.getElementById("status").innerText = "✅ KEY COPIADA AUTOMATICAMENTE";
+}
+</script>
+
+</body>
+</html>
