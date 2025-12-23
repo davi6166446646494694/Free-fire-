@@ -3,7 +3,6 @@ export default function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  // armazenamento em memória
   global.keys = global.keys || [];
 
   const chars = "FreeGHIJKLMNOPQRSTUVWXYZ0123456789FreeGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -23,5 +22,8 @@ export default function handler(req, res) {
     expiraEm: Date.now() + (56 * 60 * 60 * 1000) // 56 HORAS
   });
 
-  res.status(200).json({ key });
+  return res.status(200).json({
+    success: true,
+    key
+  });
 }
